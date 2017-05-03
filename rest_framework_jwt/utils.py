@@ -23,7 +23,7 @@ def jwt_get_secret_key(payload=None):
     """
     if api_settings.JWT_GET_USER_SECRET_KEY:
         User = get_user_model()  # noqa: N806
-        user = User.objects.get(pk=payload.get('user_id'))
+        user = User.objects.get(pk=payload.get('user_pk'))
         key = str(api_settings.JWT_GET_USER_SECRET_KEY(user))
         return key
     return api_settings.JWT_SECRET_KEY
@@ -35,18 +35,18 @@ def jwt_payload_handler(user):
 
     warnings.warn(
         'The following fields will be removed in the future: '
-        '`email` and `user_id`. ',
+        '`email` and `user_pk`. ',
         DeprecationWarning
     )
 
     payload = {
-        'user_id': user.pk,
+        'user_pk': user.pk,
         'email': user.email,
         'username': username,
         'exp': datetime.utcnow() + api_settings.JWT_EXPIRATION_DELTA
     }
     if isinstance(user.pk, uuid.UUID):
-        payload['user_id'] = str(user.pk)
+        payload['user_pk'] = str(user.pk)
 
     payload[username_field] = username
 
@@ -66,17 +66,11 @@ def jwt_payload_handler(user):
     return payload
 
 
-def jwt_get_user_id_from_payload_handler(payload):
+def jwt_get_user_pk_from_payload_handler(payload):
     """
-    Override this function if user_id is formatted differently in payload
+    Override this function if user_pk is formatted differently in payload
     """
-    warnings.warn(
-        'The following will be removed in the future. '
-        'Use `JWT_PAYLOAD_GET_USERNAME_HANDLER` instead.',
-        DeprecationWarning
-    )
-
-    return payload.get('user_id')
+    return payload.get('user_pk')
 
 
 def jwt_get_username_from_payload_handler(payload):

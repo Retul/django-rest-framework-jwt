@@ -225,7 +225,7 @@ class CustomUserUUIDObtainJSONWebTokenTests(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         decoded_payload = utils.jwt_decode_handler(response.data['token'])
-        self.assertEqual(decoded_payload['user_id'], str(self.user.id))
+        self.assertEqual(decoded_payload['user_pk'], str(self.user.pk))
 
     def test_jwt_login_json_bad_creds(self):
         """

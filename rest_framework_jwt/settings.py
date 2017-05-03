@@ -16,8 +16,8 @@ DEFAULTS = {
     'JWT_PAYLOAD_HANDLER':
     'rest_framework_jwt.utils.jwt_payload_handler',
 
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    'JWT_PAYLOAD_GET_USER_PK_HANDLER':
+    'rest_framework_jwt.utils.jwt_get_user_pk_from_payload_handler',
 
     'JWT_PRIVATE_KEY':
     None,
@@ -53,7 +53,7 @@ IMPORT_STRINGS = (
     'JWT_ENCODE_HANDLER',
     'JWT_DECODE_HANDLER',
     'JWT_PAYLOAD_HANDLER',
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER',
+    'JWT_PAYLOAD_GET_USER_PK_HANDLER',
     'JWT_PAYLOAD_GET_USERNAME_HANDLER',
     'JWT_RESPONSE_PAYLOAD_HANDLER',
     'JWT_GET_USER_SECRET_KEY',
