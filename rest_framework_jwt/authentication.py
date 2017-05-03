@@ -12,7 +12,7 @@ from rest_framework_jwt.settings import api_settings
 
 
 jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
-jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
+jwt_get_user_pk_from_payload_handler = api_settings.JWT_PAYLOAD_GET_USER_PK_HANDLER
 
 
 class BaseJSONWebTokenAuthentication(BaseAuthentication):
@@ -46,17 +46,17 @@ class BaseJSONWebTokenAuthentication(BaseAuthentication):
 
     def authenticate_credentials(self, payload):
         """
-        Returns an active user that matches the payload's user id and email.
+        Returns an active user that matches the payload's user pk.
         """
         User = get_user_model()
-        username = jwt_get_username_from_payload(payload)
+        user_pk = jwt_get_user_pk_from_payload_handler(payload)
 
-        if not username:
+        if not user_pk:
             msg = _('Invalid payload.')
             raise exceptions.AuthenticationFailed(msg)
 
         try:
-            user = User.objects.get_by_natural_key(username)
+            user = User.objects.get(pk=user_pk)
         except User.DoesNotExist:
             msg = _('Invalid signature.')
             raise exceptions.AuthenticationFailed(msg)
