@@ -1,6 +1,5 @@
 import json
 import base64
-import pytest
 
 import jwt.exceptions
 from django.test import TestCase
@@ -30,12 +29,8 @@ class UtilsTests(TestCase):
     def test_jwt_payload_handler(self):
         payload = utils.jwt_payload_handler(self.user)
 
-        pytest.deprecated_call(utils.jwt_payload_handler, self.user)
-
         self.assertTrue(isinstance(payload, dict))
         self.assertEqual(payload['user_pk'], self.user.pk)
-        self.assertEqual(payload['email'], self.email)
-        self.assertEqual(payload['username'], self.username)
         self.assertTrue('exp' in payload)
 
     def test_jwt_encode(self):

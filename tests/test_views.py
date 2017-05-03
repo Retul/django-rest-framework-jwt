@@ -58,7 +58,7 @@ class TestCustomResponsePayload(BaseTestCase):
         decoded_payload = utils.jwt_decode_handler(response.data['token'])
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(decoded_payload['username'], self.username)
+        self.assertEqual(decoded_payload['user_pk'], self.user.pk)
         self.assertEqual(response.data['user'], self.username)
 
     def tearDown(self):
@@ -78,7 +78,7 @@ class ObtainJSONWebTokenTests(BaseTestCase):
         decoded_payload = utils.jwt_decode_handler(response.data['token'])
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(decoded_payload['username'], self.username)
+        self.assertEqual(decoded_payload['user_pk'], self.user.pk)
 
     def test_jwt_login_json_bad_creds(self):
         """
@@ -114,7 +114,7 @@ class ObtainJSONWebTokenTests(BaseTestCase):
         decoded_payload = utils.jwt_decode_handler(response.data['token'])
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(decoded_payload['username'], self.username)
+        self.assertEqual(decoded_payload['user_pk'], self.user.pk)
 
     def test_jwt_login_with_expired_token(self):
         """
@@ -133,7 +133,7 @@ class ObtainJSONWebTokenTests(BaseTestCase):
         decoded_payload = utils.jwt_decode_handler(response.data['token'])
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(decoded_payload['username'], self.username)
+        self.assertEqual(decoded_payload['user_pk'], self.user.pk)
 
     def test_jwt_login_using_zero(self):
         """

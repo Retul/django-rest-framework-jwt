@@ -56,7 +56,7 @@ class JSONWebTokenSerializerTests(TestCase):
         decoded_payload = utils.jwt_decode_handler(token)
 
         self.assertTrue(is_valid)
-        self.assertEqual(decoded_payload['username'], self.username)
+        self.assertEqual(decoded_payload['user_pk'], self.user.pk)
 
     def test_invalid_credentials(self):
         self.data['password'] = 'wrong'
