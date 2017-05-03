@@ -2,7 +2,8 @@
 # only included the relevent sets when running tox, and ensures
 # we are only ever declaring out dependancies in one place.
 
--r requirements/optionals.txt
+django
+djangorestframework
 -r requirements/testing.txt
 -r requirements/documentation.txt
 -r requirements/codestyle.txt
